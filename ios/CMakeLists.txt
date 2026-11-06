@@ -1,4 +1,4 @@
-# rcX — iOS static-library build (arm64 device).
+# rcX — iOS static-library build (arm64: a device, or the Simulator with RC_IOS_SDK=iphonesimulator).
 #
 # Produces, under `ios/output/`:
 #   - lib/librccore.a        engine
@@ -25,7 +25,13 @@ include(FetchContent)
 
 # JetBrains skia-pack ships an iOS arm64 build with Metal enabled — that's
 # what the iOS app's GPU path links against.
-set(SKIA_ZIP "Skia-m144-e2e6623374-4-ios-Release-arm64.zip")
+# A device build takes its "ios" archive, a Simulator build (RC_IOS_SDK=iphonesimulator) its
+# "iosSim" one: the same Skia, linked for the other platform.
+if(RC_IOS_SDK STREQUAL "iphonesimulator")
+    set(SKIA_ZIP "Skia-m144-e2e6623374-4-iosSim-Release-arm64.zip")
+else()
+    set(SKIA_ZIP "Skia-m144-e2e6623374-4-ios-Release-arm64.zip")
+endif()
 FetchContent_Declare(skia
     URL "https://github.com/JetBrains/skia-pack/releases/download/m144-e2e6623374-4/${SKIA_ZIP}"
     DOWNLOAD_EXTRACT_TIMESTAMP TRUE
@@ -36,7 +42,10 @@ if(NOT skia_POPULATED)
 endif()
 
 set(SKIA_DIR "${skia_SOURCE_DIR}")
-if(EXISTS "${SKIA_DIR}/out/Release-ios-arm64")
+file(GLOB SKIA_OUT_DIRS "${SKIA_DIR}/out/Release-*arm64")
+if(SKIA_OUT_DIRS)
+    list(GET SKIA_OUT_DIRS 0 SKIA_LIB_DIR)
+elseif(EXISTS "${SKIA_DIR}/out/Release-ios-arm64")
     set(SKIA_LIB_DIR "${SKIA_DIR}/out/Release-ios-arm64")
 elseif(EXISTS "${SKIA_DIR}/out/Release-arm64")
     set(SKIA_LIB_DIR "${SKIA_DIR}/out/Release-arm64")

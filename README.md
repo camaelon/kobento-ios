@@ -10,6 +10,7 @@ kobento-ios/
 ├── iosNative/   rcnative — a paint backend on Core Graphics / Core Text, no Skia (most of a
 │                Skia build's size); it also builds on macOS, where kobento-tools' rc2image-native uses it
 └── iosViewer/   the SwiftUI iOS / iPadOS app, MTKView + Skia-Ganesh-Metal. See iosViewer/README.md.
+                 (The Kobento showcases app for iOS is in kobento-tools' ios/.)
 ```
 
 ## Build
@@ -19,7 +20,8 @@ checkout (or `KOBENTO_LIBS_DIR`):
 
 ```sh
 git clone https://github.com/camaelon/kobento-libs ../kobento-libs
-(cd ios && ./build.sh)              # static libs → ios/output/
+(cd ios && ./build.sh)              # static libs → ios/output/ (a device)
+(cd ios && ./build.sh sim)          # ... → ios/output-sim/ (the Simulator, Apple silicon)
 (cd iosNative && ./build.sh)        # librcnative.a
 (cd iosViewer && ./build.sh)        # xcodegen + the app
 ```
