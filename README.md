@@ -1,5 +1,9 @@
 # kobento-ios
 
+> Part of [Kobento](https://mcp.kobento.dev/), an independent implementation of RemoteCompose, not affiliated
+> with Google. [How the repositories fit together](https://mcp.kobento.dev/about/) ·
+> [Status and known gaps](https://mcp.kobento.dev/status/)
+
 The Kobento iOS player for [RemoteCompose](https://github.com/androidx/androidx/tree/androidx-main/compose/remote)
 documents.
 
